@@ -1,0 +1,10 @@
+server:
+  port: 20011
+spring:
+  application:
+    # 应用名称 默认注册到nacos上的实例名
+    name: discovery-service-consumer
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
