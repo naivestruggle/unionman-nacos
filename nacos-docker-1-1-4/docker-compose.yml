@@ -1,0 +1,48 @@
+version: "2"
+services:
+  nacos:
+    image: nacos/nacos-server:1.1.4
+    container_name: nacos-standalone-mysql
+    env_file:
+      - ./env/nacos-standlone-mysql.env
+    volumes:
+      - ./logs/standalone-logs/:/home/nacos/logs
+      - ./init.d/custom.properties:/home/nacos/init.d/custom.properties
+    ports:
+      - "8848:8848"
+      - "9555:9555"
+    depends_on:
+      - nacos-mysql-slave
+    networks:
+      - nacos_net
+
+  nacos-mysql-master:
+    container_name: nacos-mysql-master
+    hostname: nacos-mysql-master
+    image: nacos/nacos-mysql-master:latest
+    env_file:
+      - ./env/mysql-master.env
+    volumes:
+      - ./data/mysql-master/mysql:/var/lib/mysql
+    ports:
+      - "3316:3306"
+    networks:
+      - nacos_net
+
+  nacos-mysql-slave:
+    container_name: nacos-mysql-slave
+    hostname: nacos-mysql-slave
+    image: nacos/nacos-mysql-slave:latest
+    env_file:
+      - ./env/mysql-slave.env
+    volumes:
+      - ./data/mysql-slave/mysql:/var/lib/mysql
+    ports:
+      - "3317:3306"
+    depends_on:
+      - nacos-mysql-master
+    networks:
+      - nacos_net
+networks:
+  nacos_net:
+    external: true
