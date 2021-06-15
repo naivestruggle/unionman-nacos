@@ -1,0 +1,23 @@
+
+spring:
+  application:
+    name: config-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+      config:
+        # 云端nacos配置文件的后缀
+        file-extension: yaml
+        # nacos连接地址, 多个用逗号隔开
+        server-addr: localhost:8848
+        namespace: 3f041004-20e0-44b8-a213-f3090788994a
+        group: config
+        extension-configs:
+          - data-id: common-config.yaml  # 配置文件名
+            # 配置文件的分组名
+            group: common
+            # 是否支持动态刷新, 其他的配置文件, 默认是false
+            refresh: true
+server:
+  port: 8081

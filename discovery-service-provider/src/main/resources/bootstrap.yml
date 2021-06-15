@@ -1,5 +1,5 @@
 server:
-  port: 20001
+  port: 20003
 spring:
   application:
     # 应用名称 默认注册到nacos上的实例名
@@ -9,3 +9,5 @@ spring:
       discovery:
         # nacos注册中心的地址, 多个地址以逗号隔开
         server-addr: localhost:8848
+        namespace: 3f041004-20e0-44b8-a213-f3090788994a
+        group: myproject

@@ -8,3 +8,25 @@ spring:
     nacos:
       discovery:
         server-addr: localhost:8848
+        group: myproject
+        namespace: 3f041004-20e0-44b8-a213-f3090788994a
+  mvc:
+    servlet:
+      # 默认是-1, 表示项目启动时, 不会初始化DispatcherServlet, 设置成0或者正数, 启动时就会初始化
+      load-on-startup: 100
+
+# 指定目标服务配置ribbon  discovery-service-provider 是目标服务的服务名
+#discovery-service-provider:
+#  ribbon:
+##    # 配置ribbon刷新服务列表的时间间隔
+##    ServerListRefreshInterval: 1000
+
+ribbon:
+  eager-load:
+    # 开启饿加载模式, 开启后会在项目启动的时候加载 创建 RibbonClient (需要配合 ribbon.eager-load.clients 使用)
+    enabled: true
+    # 指定需要饿加载的目标服务
+    clients: discovery-service-provider
+
+  # 配置ribbon刷新服务列表的时间间隔 (全局配置, 用于所有的目标服务)
+  ServerListRefreshInterval: 1000
